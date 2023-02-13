@@ -22,5 +22,8 @@
   "bugs": {
     "url": "https://github.com/eceterak/alez-API/issues"
   },
-  "homepage": "https://github.com/eceterak/alez-API#readme"
+  "homepage": "https://github.com/eceterak/alez-API#readme",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
 }
