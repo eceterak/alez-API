@@ -1,0 +1,26 @@
+{
+  "name": "alez-api",
+  "version": "0.0.1",
+  "description": "alez api, node/express/mongo",
+  "main": "index.js",
+  "scripts": {
+    "test": "test dev"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eceterak/alez-API.git"
+  },
+  "keywords": [
+    "alez",
+    "api",
+    "node",
+    "express",
+    "mongo"
+  ],
+  "author": "Marek Bartula",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/eceterak/alez-API/issues"
+  },
+  "homepage": "https://github.com/eceterak/alez-API#readme"
+}
