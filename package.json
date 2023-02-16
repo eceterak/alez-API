@@ -4,7 +4,7 @@
   "description": "alez api, node/express/mongo",
   "main": "index.js",
   "scripts": {
-    "dev": "node app",
+    "dev": "nodemon app",
     "test": "jest --watch",
     "lint": "eslint ."
   },
