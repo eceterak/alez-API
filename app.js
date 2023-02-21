@@ -8,7 +8,7 @@ const colors = require('colors');
 dotenv.config({ path: './config/config.env' });
 
 // Connect to database
-connectDB();
+//connectDB();
 
 // Route files
 const users = require('./routes/users');
