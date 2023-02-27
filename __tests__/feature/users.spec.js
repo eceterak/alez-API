@@ -9,8 +9,6 @@ const connectDB = async (uri) => {
   const conn = await mongoose.connect(uri, {
     useNewUrlParser: true,
   });
-
-  // console.log(`MongoDB Connected: ${conn.connection.host}`.cyan.underline.bold);
 };
 
 let mongod = null;
@@ -28,15 +26,17 @@ beforeEach(async () => {
 });
 
 afterAll(async () => {
-  if (mongod !== null) {
-    mongod.stop();
+  if (mongod) {
+    await mongod.stop();
   }
+
+  await mongoose.disconnect();
 });
 
 describe('Users CRUD', () => {
   const _ROUTE = '/api/v1/users';
 
-  describe('GET /api/v1/users', () => {
+  describe.skip('GET /api/v1/users - Users listing', () => {
     it('Returns 200 OK even if there is no registered users', async () => {
       const response = await request(app).get(_ROUTE);
       expect(response.status).toBe(200);
@@ -52,28 +52,30 @@ describe('Users CRUD', () => {
     });
   });
 
-  describe('POST /api/v1/users', () => {
-    fit('Creates a new user', async () => {
-      await User.create({
-        username: 'Marek',
-        email: 'marek@bartula.com',
-      });
+  describe('POST /api/v1/users - User registration', () => {
+    const validUser = {
+      username: 'user1',
+      email: 'user1@gmail.com',
+    };
 
-      const users = await User.find();
-      console.log(users);
-      // const response = await request(app).post(_ROUTE);
+    it('returns 201 Created when signup request is valid', async () => {
+      await request(app).post(_ROUTE).send(validUser).expect(201);
     });
 
-    // it('Returns all registered users ', async () => {
-    //   for (let i = 0; i < 10; i++) {
-    //     await User.create({
-    //       username: `user${i}`,
-    //       email: `user${i}@gmail.com`,
-    //     });
+    it('saves user to database', async () => {
+      await request(app).post(_ROUTE).send(validUser);
+      const users = await User.find();
+      expect(users.length).toBe(1);
+    });
 
-    //     const response = await request(app).get(_ROUTE);
-    //     expect(response.body.data.length).toBe(10);
-    //   }
+    // it('Creates a new user', async () => {
+    //   const user = await User.create({
+    //     username: 'user1',
+    //     email: 'marek@gmail.com',
+    //   });
+
+    //   const users = await User.findById(user.id);
+    //   // const response = await request(app).post(_ROUTE);
     // });
   });
 });

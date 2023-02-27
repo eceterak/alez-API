@@ -1,5 +1,11 @@
 const app = require('./app');
 const dotenv = require('dotenv');
+const connectDB = require('./config/db');
+
+// Connect to database
+if (process.env.NODE_ENV !== 'test') {
+  connectDB();
+}
 
 const PORT = process.env.PORT || 5000;
 

@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "nodemon server",
     "start": "NODE_ENV=production nodemon server",
-    "test": "jest --watch",
+    "test": "cross-env NODE_ENV=test jest --watchAll",
     "lint": "eslint ."
   },
   "repository": {
@@ -33,6 +33,7 @@
   },
   "devDependencies": {
     "colors": "^1.4.0",
+    "cross-env": "^7.0.3",
     "eslint": "^8.34.0",
     "eslint-config-prettier": "^8.6.0",
     "eslint-plugin-prettier": "^4.2.1",
