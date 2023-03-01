@@ -1,12 +1,18 @@
 const mongoose = require('mongoose');
 
-const connectDB = async () => {
+const connectDB = async (uri) => {
   mongoose.set('strictQuery', false);
-  const conn = await mongoose.connect(process.env.MONGO_URI, {
+  const conn = await mongoose.connect(uri, {
     useNewUrlParser: true,
   });
 
-  console.log(`MongoDB Connected: ${conn.connection.host}`.cyan.underline.bold);
+  if (process.env.NODE_ENV !== 'test') {
+    console.log(`MongoDB Connected: ${conn.connection.host}`.cyan.underline.bold);
+  }
 };
 
-module.exports = connectDB;
+const disconnectDB = async () => {
+  await mongoose.disconnect();
+};
+
+module.exports = { connectDB, disconnectDB };
