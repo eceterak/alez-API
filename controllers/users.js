@@ -1,6 +1,5 @@
 const User = require('../models/User');
-const ErrorResponse = require('../error/errorResponse');
-const NotFoundException = require('../error/notFoundException');
+const NotFoundException = require('../error/NotFoundException');
 
 // @desc    Create new user
 // @route   GET /api/v1/users
@@ -14,9 +13,7 @@ exports.createUser = async (req, res, next) => {
       message: '',
     });
   } catch (err) {
-    res.status(400).json({
-      success: false,
-    });
+    next(err);
   }
 };
 
@@ -24,11 +21,12 @@ exports.createUser = async (req, res, next) => {
 // @route   GET /api/v1/users/:id
 // @access  Public
 exports.getUser = async (req, res, next) => {
+  const id = req.params.id;
   try {
-    const user = await User.findById(req.params.id);
+    const user = await User.findById(id, 'user');
     if (!user) {
-      // Resource of req.params.id is not found
-      throw new NotFoundException('user');
+      // Resource of $id is not found
+      throw new NotFoundException(id, 'user');
     }
 
     res.status(200).json({
@@ -37,7 +35,7 @@ exports.getUser = async (req, res, next) => {
       message: '',
     });
   } catch (err) {
-    next(new ErrorResponse('user', err.name, { ...err }));
+    next(err);
   }
 };
 
